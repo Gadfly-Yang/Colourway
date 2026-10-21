@@ -1,8 +1,8 @@
-<h1 align="center">🎬 video-look-transfer</h1>
+<h1 align="center">🎬 色彩转移 · Video Color Transfer</h1>
 
 <p align="center">
-  <b>把参考片/参考图的色调，变成一串可以读、可以改的数字——而不是一个冻死的 LUT。</b><br/>
-  影调曲线 · 分离调色 · 光晕（halation）· 垂直渐变 · 颗粒，全部由带参数文件的 ffmpeg 渲染完成。
+  <b>把你羡慕的那种颜色，复制到自己的素材上。</b><br/>
+  产出两样东西：调好色的成片，和一份能读、能改、改完能重渲的颜色参数文件——不烘 LUT。
 </p>
 
 <p align="center">
@@ -13,8 +13,8 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3DA639.svg" alt="License: MIT"></a>
   <img src="https://img.shields.io/badge/python-3.9%2B-3776AB.svg" alt="Python 3.9+">
   <img src="https://img.shields.io/badge/runtime-ffmpeg-007808.svg" alt="ffmpeg">
-  <a href="https://github.com/Gadfly-Yang/video-look-transfer/stargazers"><img src="https://img.shields.io/github/stars/Gadfly-Yang/video-look-transfer.svg" alt="Stars"></a>
-  <a href="https://github.com/Gadfly-Yang/video-look-transfer/issues"><img src="https://img.shields.io/github/issues/Gadfly-Yang/video-look-transfer.svg" alt="Issues"></a>
+  <a href="https://github.com/Gadfly-Yang/video-color-transfer/stargazers"><img src="https://img.shields.io/github/stars/Gadfly-Yang/video-color-transfer.svg" alt="Stars"></a>
+  <a href="https://github.com/Gadfly-Yang/video-color-transfer/issues"><img src="https://img.shields.io/github/issues/Gadfly-Yang/video-color-transfer.svg" alt="Issues"></a>
 </p>
 
 <p align="center">
@@ -31,7 +31,7 @@
 ## 🌟 这是什么
 
 你有一段拍得很平的视频，和一张（或一段）你羡慕它颜色的参考素材。
-`video-look-transfer` 会把参考读成一个**风格签名**——影调分位、冷暖分离、饱和度、光晕、
+`video-color-transfer` 会把参考读成一个**风格签名**——影调分位、冷暖分离、饱和度、光晕、
 垂直结构——然后用**参数化**的管线把你的素材调成同样的关系。
 
 产出不只是一段视频：还有产出它的那 **26 个数字**组成的 JSON。改一个数，重渲，对比。
@@ -240,7 +240,7 @@ MIT —— 见 [LICENSE](LICENSE)。随便用，不担保。
 
 ## ⭐ Star 趋势
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Gadfly-Yang/video-look-transfer&type=Date)](https://star-history.com/#Gadfly-Yang/video-look-transfer&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Gadfly-Yang/video-color-transfer&type=Date)](https://star-history.com/#Gadfly-Yang/video-color-transfer&Date)
 
 ---
 

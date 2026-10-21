@@ -1,8 +1,8 @@
-<h1 align="center">🎬 video-look-transfer</h1>
+<h1 align="center">🎬 Video Color Transfer</h1>
 
 <p align="center">
-  <b>Copy the look of a reference clip or still — as readable numbers, not a frozen LUT.</b><br/>
-  Tone curve · split toning · halation · vertical gradients · grain, all rendered by re-running ffmpeg with a parameter file you can read and diff.
+  <b>Give your footage the colour of a reference photo or video.</b><br/>
+  You get back two things: the graded clip, and a short JSON of colour settings you can read, edit and re-render — no LUT involved.
 </p>
 
 <p align="center">
@@ -13,8 +13,8 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3DA639.svg" alt="License: MIT"></a>
   <img src="https://img.shields.io/badge/python-3.9%2B-3776AB.svg" alt="Python 3.9+">
   <img src="https://img.shields.io/badge/runtime-ffmpeg-007808.svg" alt="ffmpeg">
-  <a href="https://github.com/Gadfly-Yang/video-look-transfer/stargazers"><img src="https://img.shields.io/github/stars/Gadfly-Yang/video-look-transfer.svg" alt="Stars"></a>
-  <a href="https://github.com/Gadfly-Yang/video-look-transfer/issues"><img src="https://img.shields.io/github/issues/Gadfly-Yang/video-look-transfer.svg" alt="Issues"></a>
+  <a href="https://github.com/Gadfly-Yang/video-color-transfer/stargazers"><img src="https://img.shields.io/github/stars/Gadfly-Yang/video-color-transfer.svg" alt="Stars"></a>
+  <a href="https://github.com/Gadfly-Yang/video-color-transfer/issues"><img src="https://img.shields.io/github/issues/Gadfly-Yang/video-color-transfer.svg" alt="Issues"></a>
 </p>
 
 <p align="center">
@@ -31,7 +31,7 @@
 ## 🌟 Overview
 
 You have a video that looks flat and a picture (or another clip) whose colour you envy.
-`video-look-transfer` reads the reference as a **look signature** — tone percentiles,
+`video-color-transfer` reads the reference as a **look signature** — tone percentiles,
 cool/warm separation, saturation, halation, vertical structure — and then grades your
 footage with a **parameterised** pipeline that reproduces those relationships.
 
@@ -257,7 +257,7 @@ MIT — see [LICENSE](LICENSE). Do whatever you want, no warranty.
 
 ## ⭐ Star history
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Gadfly-Yang/video-look-transfer&type=Date)](https://star-history.com/#Gadfly-Yang/video-look-transfer&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Gadfly-Yang/video-color-transfer&type=Date)](https://star-history.com/#Gadfly-Yang/video-color-transfer&Date)
 
 ---
 
