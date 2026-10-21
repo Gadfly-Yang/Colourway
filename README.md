@@ -1,8 +1,8 @@
-<h1 align="center">🎬 Video Color Transfer</h1>
+<h1 align="center">🎬 Colourway</h1>
 
 <p align="center">
-  <b>Give your footage the colour of a reference photo or video.</b><br/>
-  You get back two things: the graded clip, and a short JSON of colour settings you can read, edit and re-render — no LUT involved.
+  <b>A colourway is a colour scheme. This one you copy from a reference.</b><br/>
+  Give your footage the colour of a reference photo or video — you get back the graded clip, plus a short JSON of colour settings you can read, edit and re-render. No LUT involved.
 </p>
 
 <p align="center">
@@ -13,8 +13,8 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-3DA639.svg" alt="License: MIT"></a>
   <img src="https://img.shields.io/badge/python-3.9%2B-3776AB.svg" alt="Python 3.9+">
   <img src="https://img.shields.io/badge/runtime-ffmpeg-007808.svg" alt="ffmpeg">
-  <a href="https://github.com/Gadfly-Yang/video-color-transfer/stargazers"><img src="https://img.shields.io/github/stars/Gadfly-Yang/video-color-transfer.svg" alt="Stars"></a>
-  <a href="https://github.com/Gadfly-Yang/video-color-transfer/issues"><img src="https://img.shields.io/github/issues/Gadfly-Yang/video-color-transfer.svg" alt="Issues"></a>
+  <a href="https://github.com/Gadfly-Yang/Colourway/stargazers"><img src="https://img.shields.io/github/stars/Gadfly-Yang/Colourway.svg" alt="Stars"></a>
+  <a href="https://github.com/Gadfly-Yang/Colourway/issues"><img src="https://img.shields.io/github/issues/Gadfly-Yang/Colourway.svg" alt="Issues"></a>
 </p>
 
 <p align="center">
@@ -31,7 +31,7 @@
 ## 🌟 Overview
 
 You have a video that looks flat and a picture (or another clip) whose colour you envy.
-`video-color-transfer` reads the reference as a **look signature** — tone percentiles,
+Colourway reads the reference as a **look signature** — tone percentiles,
 cool/warm separation, saturation, halation, vertical structure — and then grades your
 footage with a **parameterised** pipeline that reproduces those relationships.
 
@@ -257,7 +257,7 @@ MIT — see [LICENSE](LICENSE). Do whatever you want, no warranty.
 
 ## ⭐ Star history
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Gadfly-Yang/video-color-transfer&type=Date)](https://star-history.com/#Gadfly-Yang/video-color-transfer&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Gadfly-Yang/Colourway&type=Date)](https://star-history.com/#Gadfly-Yang/Colourway&Date)
 
 ---
 
