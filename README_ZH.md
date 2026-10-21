@@ -26,7 +26,27 @@
   同一套参数，没有烘 LUT。素材来自 Pexels（免费商用）。</i>
 </p>
 
+<p align="center">
+  <b>输入：</b>一段素材 + 一个参考（照片或视频） &nbsp;·&nbsp;
+  <b>输出：</b>调好的 <code>.mp4</code> + 一份 26 个数字的 <code>.json</code> &nbsp;·&nbsp;
+  <b>要装：</b>Python 3.9+、<code>numpy imageio pillow</code>、<code>ffmpeg</code>
+</p>
+
 ---
+
+## 📦 一眼看清：输入 / 输出 / 要装什么
+
+| 🎬 你给什么 | 📤 你拿到什么 | 🧰 你先装什么 |
+|:--|:--|:--|
+| **1 段要调的片子** —— `myclip.mp4`，ffmpeg 能读的格式都行<br><br>**1 个参考** —— 一张照片（`ref.jpg`、`ref.png`）**或**一段视频（`ref.mp4`）。同题材、完全不同题材都可以。 | **`myclip_graded.mp4`** —— 调好色的成片，H.264，原音轨原样复制<br><br>**`myclip.json`** —— 产出它的 26 个数字，改完可以重渲<br><br>**`look.cube`** —— 可选，给 Premiere / 达芬奇用的 LUT<br><br>**PNG 预览图** —— 任意时间点的前后对比帧 | **Python 3.9+**<br><br>**3 个包**：`numpy imageio pillow`<br><br>**ffmpeg + ffprobe** 在 PATH 里<br><br>不需要显卡 · 不需要 API Key · 不需要注册 · 不上传任何素材 |
+
+```
+调色前/                            调色后/
+├── myclip.mp4    ────────────▶    ├── myclip_graded.mp4   ← 留下的成片
+└── ref.jpg                        ├── myclip.json         ← 26 个数字（改完可重渲）
+                                   ├── LUTs/look.cube     ← 可选，只有颜色
+                                   └── _grade/look/*.png  ← 预览图和对比图
+```
 
 ## 🌟 这是什么
 
@@ -62,16 +82,32 @@ Colourway 会把参考读成一个**风格签名**——影调分位、冷暖分
 
 ## 🚀 快速开始
 
-**环境**
+### 1 · 先装环境（约两分钟）
 
 ```bash
-pip install numpy imageio pillow   # Pillow 仅 contact_sheet.py 需要
-ffmpeg -version                    # ffmpeg 和 ffprobe 要在 PATH 里
+# Python 3.9+ 和三个包（Pillow 只有 contact_sheet.py 用得到）
+pip install numpy imageio pillow
+
+# ffmpeg + ffprobe —— 按你的系统挑一行
+winget install Gyan.FFmpeg     # Windows
+brew install ffmpeg            # macOS
+sudo apt install ffmpeg        # Ubuntu / Debian
+
+ffmpeg -version                # 能打印版本号就算装好了
 ```
 
-Python 3.9+，不需要显卡。渲染是 CPU 上的 numpy 加管道喂给 ffmpeg。
+不需要显卡、不需要账号、不需要 API Key。渲染是 CPU 上的 numpy 加管道喂给 ffmpeg。
 
-**用参考给一段素材调色**
+### 2 · 先看它能不能跑（30 秒）
+
+```bash
+python scripts/lookgrade.py render myclip.mp4 out.mp4 \
+       --params examples/params_sea_sunset.json --limit 30
+```
+
+`--limit 30` 只渲前 30 帧——先确认管线通、顺便看一眼效果，再决定要不要整片渲。
+
+### 3 · 用你自己的参考调你自己的片子
 
 ```bash
 # 1. 先看清楚手上是什么
@@ -84,15 +120,15 @@ python scripts/lookgrade.py sig     reference.mp4
 # 3. 生成一份中性起点——这个 JSON 就是全部的调参界面
 python scripts/lookgrade.py defaults --out _grade/params_myclip.json
 
-# 4. 迭代：每次改 2–3 个键，看两个时间点，再决定留或退
+# 迭代：每次改 2–3 个键，看两个时间点，再决定留或退
 python scripts/lookgrade.py variant myclip.mp4 3.5 _grade/_ov.json v3 --params _grade/params_myclip.json
 python scripts/lookgrade.py preview myclip.mp4 1.0 4.5 --params _grade/params_myclip.json
 
-# 5. 整片渲染 + 数据验证
+# 整片渲染 + 数据验证
 python scripts/lookgrade.py render  myclip.mp4 myclip_graded.mp4 --params _grade/params_myclip.json
 python scripts/lookgrade.py metrics myclip_graded.mp4
 
-# 6. 可选：导出 .cube 给 Premiere / Resolve（只有颜色，没有光晕和颗粒）
+# 可选：导出 .cube 给 Premiere / Resolve（只有颜色，没有光晕和颗粒）
 python scripts/lookgrade.py lut _grade/params_myclip.json LUTs/look.cube
 ```
 

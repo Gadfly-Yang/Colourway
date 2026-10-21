@@ -26,7 +26,27 @@
   One parameter set. No baked LUT. Sources: “Calm Sea Under Overcast Sky” and “Cloud Over Sea At Sunset” on Pexels.</i>
 </p>
 
+<p align="center">
+  <b>In:</b> one clip + one reference (a photo or a video) &nbsp;·&nbsp;
+  <b>Out:</b> the graded <code>.mp4</code> + a <code>.json</code> of 26 settings &nbsp;·&nbsp;
+  <b>Install:</b> Python 3.9+, <code>numpy imageio pillow</code>, <code>ffmpeg</code>
+</p>
+
 ---
+
+## 📦 Input → output at a glance
+
+| 🎬 You give | 📤 You get back | 🧰 You need installed |
+|:--|:--|:--|
+| **1 video** to grade — `myclip.mp4`, anything ffmpeg can read<br><br>**1 reference** — a photo (`ref.jpg`, `ref.png`) **or** a clip (`ref.mp4`). Same subject or a completely different one, both work. | **`myclip_graded.mp4`** — the graded clip, H.264, original audio copied<br><br>**`myclip.json`** — the 26 numbers behind it; edit and re-render<br><br>**`look.cube`** — optional LUT for Premiere / Resolve<br><br>**PNG previews** — before/after stills at any timestamp | **Python 3.9+**<br><br>**3 packages**: `numpy imageio pillow`<br><br>**ffmpeg + ffprobe** on your PATH<br><br>No GPU · no API key · no account · nothing is uploaded |
+
+```
+before/                            after/
+├── myclip.mp4    ────────────▶    ├── myclip_graded.mp4   ← the video you keep
+└── ref.jpg                        ├── myclip.json         ← the 26 numbers (edit + re-render)
+                                   ├── LUTs/look.cube       ← optional, colour only
+                                   └── _grade/look/*.png    ← previews and contact sheets
+```
 
 ## 🌟 Overview
 
@@ -66,37 +86,54 @@ So the grade stays as numbers you can read, diff, re-render and explain.
 
 ## 🚀 Quick start
 
-**Requirements**
+### 1 · Install (about two minutes)
 
 ```bash
-pip install numpy imageio pillow   # Pillow only for contact_sheet.py
-ffmpeg -version                    # ffmpeg + ffprobe must be on PATH
+# Python 3.9+ and three packages (Pillow is only used by contact_sheet.py)
+pip install numpy imageio pillow
+
+# ffmpeg + ffprobe — pick one line for your system
+winget install Gyan.FFmpeg     # Windows
+brew install ffmpeg            # macOS
+sudo apt install ffmpeg        # Ubuntu / Debian
+
+ffmpeg -version                # must print a version, that is the whole check
 ```
 
-Python 3.9+. No GPU. Rendering is CPU numpy plus pipes to ffmpeg.
+No GPU, no account, no API key. Rendering is CPU numpy piped into ffmpeg.
 
-**Grade a clip against a reference**
+### 2 · See it work (30 seconds)
 
 ```bash
-# 1. what am I working with?
+python scripts/lookgrade.py render myclip.mp4 out.mp4 \
+       --params examples/params_sea_sunset.json --limit 30
+```
+
+`--limit 30` renders only the first 30 frames — enough to confirm the pipeline runs and
+to eyeball a look before you commit to the whole clip.
+
+### 3 · Grade your own clip against your own reference
+
+```bash
+# what am I working with?
 python scripts/lookgrade.py probe   myclip.mp4
 python scripts/lookgrade.py metrics myclip.mp4
 
-# 2. what does the reference look like? (video or still)
+# what does the reference look like? (video or still)
 python scripts/lookgrade.py sig     reference.mp4
 
-# 3. neutral starting point — this JSON *is* the tuning interface
+# neutral starting point — this JSON *is* the tuning interface
 python scripts/lookgrade.py defaults --out _grade/params_myclip.json
 
-# 4. iterate: change 2–3 keys, look at two timestamps, repeat
+# iterate: change 2–3 keys, look at two timestamps, repeat
 python scripts/lookgrade.py variant myclip.mp4 3.5 _grade/_ov.json v3 --params _grade/params_myclip.json
 python scripts/lookgrade.py preview myclip.mp4 1.0 4.5 --params _grade/params_myclip.json
 
-# 5. full render + proof
+# full render + proof
 python scripts/lookgrade.py render  myclip.mp4 myclip_graded.mp4 --params _grade/params_myclip.json
 python scripts/lookgrade.py metrics myclip_graded.mp4
 
-# 6. optional: a .cube for Premiere / Resolve (colour only — no halation, no grain)
+# optional: a .cube for Premiere / Resolve (colour only — no halation, no grain)
 python scripts/lookgrade.py lut _grade/params_myclip.json LUTs/look.cube
 ```
 
