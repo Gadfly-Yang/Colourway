@@ -5,7 +5,9 @@
 
 [English](README.md) · [命令手册](docs/CLI.md) · [Agent skill 说明](SKILL.md)
 
-![前后对比](docs/images/look-transfer-before-after.png)
+![原片 / 参考图 / 调色后](docs/images/look-transfer-three-panel.png)
+
+*上到下：色彩平庸的原片；当作风格来源的落日参考图；同一段素材调色后的样子——同一套参数，没有烘 LUT。素材来自 Pexels（免费商用，见「致谢」）。*
 
 *一段 5 秒 1080p 素材，用 `examples/params_ocean.json` 调出来。素材来自 Pexels 的
 "Drone View Of Big Waves"（免费商用，见[致谢](#致谢)）。*
@@ -132,10 +134,11 @@ demo 的变化方向是这个 look 想要的，不是通用目标：
 
 | | 原片 | 调色后 |
 |---|---|---|
-| 饱和度 | 0.394 | **0.585** |
-| p99（高光） | 0.940 | **0.713** |
-| `shadow_rb`（暗部） | −0.171 | **−0.308** |
-| `high_rb`（高光） | −0.089 | **+0.032** |
+| 饱和度 | 0.084 | **0.520** |
+| 亮度 | 0.570 | **0.382** |
+| p99（高光） | 0.872 | **0.585** |
+| `shadow_rb`（暗部） | +0.022 | **−0.303** |
+| `high_rb`（高光） | −0.061 | **+0.245** |
 
 这里的 `clip` 是 0.208——那是**底部**裁剪：teal 把深阴影里的红通道推到 0。
 `metrics` 故意两端都统计；要判断是不是问题，看 100% 裁切，别只看这个数字。
@@ -150,7 +153,9 @@ demo 的变化方向是这个 look 想要的，不是通用目标：
 
 ## 致谢
 
-- demo 素材：[Drone View Of Big Waves](https://www.pexels.com/video/drone-view-of-big-waves-3571264/)，
+- demo 原片：[Foggy](https://www.pexels.com/video/36411791/)（Pexels，免费商用）。
+- 参考图：[Cloud Over Sea At Sunset](https://www.pexels.com/photo/cloud-over-sea-at-sunset-20141165/)（Pexels）。
+- 旧海洋 demo：[Drone View Of Big Waves](https://www.pexels.com/video/drone-view-of-big-waves-3571264/)，
   作者 Coverr，来自 Pexels——免费使用、无需署名（[许可](https://www.pexels.com/license/)）。
 - `scripts/lookgrade.py` 运行期需要 `ffmpeg`，但不打包它；ffmpeg 是作为外部程序调用的。
 

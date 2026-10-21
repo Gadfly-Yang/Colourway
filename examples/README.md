@@ -1,46 +1,66 @@
-# Reproducing the before/after image
+# Reproducing the three-panel image
 
-The picture in `docs/images/look-transfer-before-after.png` was made from a free
-stock clip, so you can rebuild it byte-for-byte and then swap in your own footage.
+The picture in `docs/images/look-transfer-three-panel.png` is built from two free stock
+assets, so you can rebuild it and then swap in your own footage:
 
-## 1. Get the source clip
+1. **the flat footage** — a grey, foggy aerial: almost no colour (saturation 0.084)
+2. **the reference still** — a warm sunset over the sea, used only as a look source
+3. **the result** — the same aerial graded with `examples/params_foggy_sunset.json`
 
-The shot is **"Drone View Of Big Waves"** by *Coverr* on Pexels:
-<https://www.pexels.com/video/drone-view-of-big-waves-3571264/>
+## 1. Get the assets
 
-Pexels clips are free to use, including commercially, without attribution
-(<https://www.pexels.com/license/>). Download the 4K file and keep it outside this
-repo — video files are git-ignored on purpose.
+| Panel | Asset | Link |
+|---|---|---|
+| 1 & 3 | **"Foggy"** — 4K aerial, 41 s | <https://www.pexels.com/video/36411791/> |
+| 2 | **"Cloud Over Sea At Sunset"** — still | <https://www.pexels.com/photo/cloud-over-sea-at-sunset-20141165/> |
+
+Pexels assets are free to use, including commercially, without attribution
+(<https://www.pexels.com/license/>). Keep the downloads outside this repo — video and
+image files are git-ignored on purpose.
+
+```bash
+curl -L -o demo_src.mp4  "https://www.pexels.com/download/video/36411791/"
+curl -L -o ref_style.jpg "https://images.pexels.com/photos/20141165/pexels-photo-20141165.jpeg?cs=srgb&fm=jpg&w=1920"
+```
 
 ## 2. Make a flat 5-second 1080p cut
 
-The original is 4K / 29.97 fps / 33 s. Trimming first keeps the render fast:
-
 ```bash
-ffmpeg -y -i demo_src.mp4 -t 5 -vf "scale=1920:1080:flags=lanczos" \
-       -r 30000/1001 -c:v libx264 -crf 18 -preset slow -an demo_flat.mp4
+ffmpeg -y -v error -ss 1 -t 5 -i demo_src.mp4 \
+       -vf "scale=1920:1080:flags=lanczos,fps=30" \
+       -c:v libx264 -crf 18 -preset slow -pix_fmt yuv420p -an demo_flat.mp4
+ffmpeg -y -v error -i ref_style.jpg -vf "scale=1920:1080:flags=lanczos" ref_1080.png
 ```
 
-Result: 1920×1080, 150 frames, ~5.005 s.
+Result: 1920×1080, 150 frames, 5.0 s, no audio.
 
-## 3. Grade it
+## 3. Read the reference, then grade
+
+`sig` on the still gives the direction (warm darks *and* warm highlights would mean an
+amber wash; here the still separates warm sky from cool water, which is what we copy):
 
 ```bash
+python scripts/lookgrade.py sig ref_1080.png
 python scripts/lookgrade.py render demo_flat.mp4 demo_graded.mp4 \
-       --params examples/params_ocean.json --crf 20
+       --params examples/params_foggy_sunset.json --crf 18
 ```
 
-`examples/params_ocean.json` is the exact parameter set used for the published
-image: desaturated cool shadows, mild warm highlights, two-radius halation around
-the sun glints, a touch of top darkening, luminance-only grain (chroma grain is off
-because heavy blue in 8-bit 4:2:0 turns it into blotches).
+The parameter set: highlights compressed into a warm hazy band (`orange` 0.45,
+`white` 0.80), a cool cast pushed into the darks (`teal` 0.20, `teal_mid` 0.10), the top
+of the frame darkened (`grad_dark` 0.28) so the horizon reads as the brightest line, and
+luminance-only grain (chroma grain is off — heavy blue in 8-bit 4:2:0 turns it into
+blotches).
 
-## 4. Build the two-panel sheet
+## 4. Build the three-panel sheet
 
 ```bash
-ffmpeg -y -v error -ss 1.5 -i demo_flat.mp4   -frames:v 1 -vf scale=960:540 flat.png
-ffmpeg -y -v error -ss 1.5 -i demo_graded.mp4 -frames:v 1 -vf scale=960:540 graded.png
-python scripts/contact_sheet.py before-after.png "Before=flat.png" "After=graded.png"
+ffmpeg -y -v error -ss 2 -i demo_flat.mp4   -frames:v 1 -vf scale=960:540 src.png
+ffmpeg -y -v error -i ref_1080.png          -vf scale=960:540 ref.png
+ffmpeg -y -v error -ss 2 -i demo_graded.mp4 -frames:v 1 -vf scale=960:540 graded.png
+python scripts/contact_sheet.py three-panel.png \
+       "Original (flat, ungraded)=src.png" \
+       "Reference still (look source)=ref.png" \
+       "Graded (after transfer)=graded.png"
 ```
 
 ## 5. Check the numbers
@@ -50,9 +70,8 @@ python scripts/lookgrade.py metrics demo_flat.mp4
 python scripts/lookgrade.py metrics demo_graded.mp4
 ```
 
-The demo moves saturation up ~1.4× and pulls the highlights down (p99 well below
-the source), which is what this particular look asks for. Your own footage will
-want a different direction — that is what `sig` on a reference clip is for.
+Expected movement: saturation 0.08 → ~0.52, luma 0.57 → ~0.38, p99 0.87 → ~0.59,
+`shadow_rb` +0.02 → −0.30, `high_rb` −0.06 → +0.25.
 
 ## Using your own footage
 
