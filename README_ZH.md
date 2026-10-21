@@ -110,14 +110,14 @@ python scripts/lookgrade.py render myclip.mp4 out.mp4 \
 ### 3 · 用你自己的参考调你自己的片子
 
 ```bash
-# 1. 先看清楚手上是什么
+# 先看清楚手上是什么
 python scripts/lookgrade.py probe   myclip.mp4
 python scripts/lookgrade.py metrics myclip.mp4
 
-# 2. 看清楚参考是什么（视频或图片都行）
+# 看清楚参考是什么（视频或图片都行）
 python scripts/lookgrade.py sig     reference.mp4
 
-# 3. 生成一份中性起点——这个 JSON 就是全部的调参界面
+# 生成一份中性起点——这个 JSON 就是全部的调参界面
 python scripts/lookgrade.py defaults --out _grade/params_myclip.json
 
 # 迭代：每次改 2–3 个键，看两个时间点，再决定留或退
