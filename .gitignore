@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Working output (lookgrade.py default workdir)
+_grade/
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.wav
+*.m4a
+*.cube
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
