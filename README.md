@@ -7,9 +7,10 @@ grade your footage with curves, split toning, halation and grain. *No baked LUTs
 
 ![Original, reference still, graded result](docs/images/look-transfer-three-panel.png)
 
-*Top to bottom: the flat, ungraded footage; the sunset still used as the look source; the
-same footage after the transfer — one parameter set, no LUT. Sources: "Foggy" and "Cloud
-Over Sea At Sunset" on Pexels (free licence, see [Credits](#credits)).*
+*Left to right: the flat, ungraded footage; the sunset still used as the look source; the
+same footage after the transfer — one parameter set, no LUT. Sources: "Calm Sea Under
+Overcast Sky" and "Cloud Over Sea At Sunset" on Pexels (free licence, see
+[Credits](#credits)).*
 
 ---
 
@@ -147,16 +148,18 @@ The demo deltas are what the look asks for, not a universal target:
 
 | | source | graded |
 |---|---|---|
-| saturation | 0.084 | **0.520** |
-| luma | 0.570 | **0.382** |
-| p99 (highlights) | 0.872 | **0.585** |
-| `shadow_rb` (darks) | +0.022 | **−0.303** |
-| `high_rb` (highlights) | −0.061 | **+0.245** |
+| saturation | 0.187 | **0.487** |
+| luma | 0.678 | **0.412** |
+| p50 (midtones) | 0.745 | **0.416** |
+| p99 (highlights) | 0.904 | **0.623** |
+| `shadow_rb` (darks) | −0.175 | **−0.356** |
 
-The source is a grey foggy aerial: saturation ×6, darks pulled cool, highlights pulled
-warm, top-end compressed. `clip` reports 0.035 — mostly **bottom** clipping, i.e. teal
-pushing the red channel of deep-shade pixels to zero. `metrics` counts both ends on
-purpose; check a 100 % crop before treating it as a problem.
+The source is a flat overcast seascape: saturation ×2.6, the whole upper range pulled
+down (p99 0.904 → 0.623, so no pixel above 0.70 survives and `high_rb` stops reporting),
+darks pushed further into teal, and a top-down gradient that darkens the sky so the
+horizon band is the brightest thing in frame. `clip` reports 0.089 — mostly **bottom**
+clipping, i.e. teal pushing the red channel of deep-shade pixels to zero; `metrics`
+counts both ends on purpose, so check a 100 % crop before treating it as a problem.
 
 ## Limitations
 
@@ -171,8 +174,9 @@ purpose; check a 100 % crop before treating it as a problem.
 
 ## Credits
 
-- Demo footage: [Foggy](https://www.pexels.com/video/36411791/) via Pexels — free to use,
-  no attribution required ([licence](https://www.pexels.com/license/)).
+- Demo footage: [Calm Sea Under Overcast Sky](https://www.pexels.com/video/34727351/)
+  via Pexels — free to use, no attribution required
+  ([licence](https://www.pexels.com/license/)).
 - Reference still: [Cloud Over Sea At Sunset](https://www.pexels.com/photo/cloud-over-sea-at-sunset-20141165/)
   via Pexels, same licence.
 - Older ocean demo: [Drone View Of Big Waves](https://www.pexels.com/video/drone-view-of-big-waves-3571264/)
