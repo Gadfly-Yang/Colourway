@@ -1,4 +1,8 @@
-# CLI reference
+# 🛠 CLI reference
+
+<p align="center">
+  <a href="../README.md">README</a> ｜ <a href="../SKILL.md">Agent skill</a>
+</p>
 
 Everything below is `python scripts/lookgrade.py <command> ...`.
 Run without arguments to get the short usage list.
