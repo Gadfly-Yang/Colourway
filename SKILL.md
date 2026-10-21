@@ -1,5 +1,5 @@
 ---
-name: video-look-transfer
+name: video-color-transfer
 description: 把一条片子的调色风格迁移到另一条片子上——给一个参考视频或参考图片（或一组颜色/氛围词），产出同款风格的成片、LUT 和对比图。Use when the user asks to 调色/风格迁移/参照某个视频调色/统一镜头色彩/套 LUT/film look/teal & orange grade, or hands over a reference clip or still and asks for another clip to match it.
 ---
 
